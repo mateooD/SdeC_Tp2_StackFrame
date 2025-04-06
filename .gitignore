@@ -1,0 +1,30 @@
+# === Archivos compilados de C ===
+*.o
+*.so
+*.out
+*.exe
+
+# === Archivos de Python ===
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# === Entornos virtuales ===
+env/
+venv/
+
+# === Archivos temporales y de sistema ===
+*.log
+*.tmp
+*.bak
+*~
+.DS_Store
+
+# === Carpetas de build y dist ===
+/build/
+/dist/
+
+# === Archivos de IDEs ===
+.vscode/
+.idea/

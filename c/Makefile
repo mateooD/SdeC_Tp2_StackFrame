@@ -1,14 +1,21 @@
-CC = gcc
-CFLAGS = -Wall -fPIC -O2
-LDFLAGS = -shared
+CC=gcc
+ASM=nasm
+CFLAGS=-Wall -m32 -g
+ASFLAGS=-f elf32
+LDFLAGS=-m32
+OBJ=test_gini.o process_gini_asm.o
+EXEC=test_gini
 
-all: libgini.so
+all: $(EXEC)
 
-libgini.so: process_gini.o
+$(EXEC): $(OBJ)
 	$(CC) $(LDFLAGS) -o $@ $^
 
-process_gini.o: process_gini.c process_gini.h
+test_gini.o: test_gini.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
+process_gini_asm.o: process_gini_asm.s
+	$(ASM) $(ASFLAGS) $< -o $@
+
 clean:
-	rm -f *.o *.so
+	rm -f *.o $(EXEC)

@@ -1,21 +1,29 @@
-CC=gcc
-ASM=nasm
-CFLAGS=-Wall -m32 -g
-ASFLAGS=-f elf32
-LDFLAGS=-m32
-OBJ=test_gini.o process_gini_asm.o
-EXEC=test_gini
+LIB_NAME = libgini.so
+C_SRC = process_gini.c
+ASM_SRC = process_gini_asm64.s
+OBJ = process_gini.o process_gini_asm.o
 
-all: $(EXEC)
+# Flags 
+CFLAGS = -m64 -fPIC -Wall
+LDFLAGS = -shared
+NASMFLAGS = -f elf64
 
-$(EXEC): $(OBJ)
-	$(CC) $(LDFLAGS) -o $@ $^
+# Compilador
+CC = gcc
+ASM = nasm
 
-test_gini.o: test_gini.c
+all: $(LIB_NAME)
+
+$(LIB_NAME): $(OBJ)
+	$(CC) -m64 $(LDFLAGS) -o $@ $^
+
+# Compilar archivo C
+process_gini.o: $(C_SRC) process_gini.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
-process_gini_asm.o: process_gini_asm.s
-	$(ASM) $(ASFLAGS) $< -o $@
+# Compilar archivo ASM
+process_gini_asm.o: $(ASM_SRC)
+	$(ASM) $(NASMFLAGS) $< -o $@
 
 clean:
-	rm -f *.o $(EXEC)
+	rm -f *.o $(LIB_NAME)

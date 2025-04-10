@@ -1,8 +1,9 @@
 ; process_gini_asm_32.s
-global convertir_y_sumar
 section .text
+    global convertir_y_sumar_asm
 
-convertir_y_sumar:
+
+convertir_y_sumar_asm:
     push ebp
     mov ebp, esp
 

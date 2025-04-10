@@ -1,21 +1,20 @@
-CC=gcc
-ASM=nasm
-CFLAGS=-Wall -m32 -g
-ASFLAGS=-f elf32
-LDFLAGS=-m32
-OBJ=test_gini.o process_gini_asm.o
-EXEC=test_gini
+LIB_NAME = libgini.so
+SRC = process_gini.c
 
-all: $(EXEC)
+# Flags de compilación
+CFLAGS = -fPIC -Wall
+LDFLAGS = -shared
 
-$(EXEC): $(OBJ)
+# Objetos generados
+OBJ = $(SRC:.c=.o)
+
+all: $(LIB_NAME)
+
+$(LIB_NAME): $(OBJ)
 	$(CC) $(LDFLAGS) -o $@ $^
 
-test_gini.o: test_gini.c
+%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-process_gini_asm.o: process_gini_asm.s
-	$(ASM) $(ASFLAGS) $< -o $@
-
 clean:
-	rm -f *.o $(EXEC)
+	rm -f *.o $(LIB_NAME)

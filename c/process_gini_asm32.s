@@ -1,4 +1,4 @@
-; process_gini_asm.s
+; process_gini_asm32.s
 section .text
     global convertir_y_sumar_asm
 
@@ -16,4 +16,3 @@ convertir_y_sumar_asm:
 
     pop ebp
     ret
-

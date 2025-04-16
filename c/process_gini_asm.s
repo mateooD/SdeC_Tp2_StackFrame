@@ -1,4 +1,4 @@
-; process_gini_asm_32.s
+; process_gini_asm.s
 section .text
     global convertir_y_sumar_asm
 

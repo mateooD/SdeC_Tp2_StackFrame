@@ -1,12 +1,11 @@
 import ctypes
 import os
 import requests
-#from msl.loadlib import LoadLibrary
 
 # Cargar la librería compartida desde el path correcto
 lib_path = os.path.join(os.path.dirname(__file__), '..', 'c', 'libgini.so')
 gini_lib = ctypes.CDLL(lib_path)
-#gini_lib = LoadLibrary(lib_path)
+
 
 # Configurar los tipos de la función
 gini_lib.convertir_y_sumar.argtypes = [ctypes.c_float]

@@ -4,7 +4,7 @@ ASM_SRC = process_gini_asm.s
 OBJ = process_gini.o process_gini_asm.o
 
 # Flags 
-CFLAGS = -m32 -fPIC -Wall
+CFLAGS = -m32 -g -fPIC -Wall
 LDFLAGS = -shared
 NASMFLAGS = -f elf32
 
@@ -15,7 +15,7 @@ ASM = nasm
 all: $(LIB_NAME)
 
 $(LIB_NAME): $(OBJ)
-	$(CC) -m32 $(LDFLAGS) -o $@ $^
+	$(CC) -m32 -g $(LDFLAGS) -o $@ $^
 
 # Compilar archivo C
 process_gini.o: $(C_SRC) process_gini.h

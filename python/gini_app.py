@@ -82,8 +82,14 @@ def get_gini_data_processed(country, start_year, end_year):
 df = get_gini_data_processed(country_code, year_range[0], year_range[1])
 
 if not df.empty:
+    #Evolucion
     st.subheader(f"📈 Evolución del Índice de Gini en {pais_seleccionado}")
+    df['Año'] = df['Año'].astype(int)
     st.line_chart(df.rename(columns={"Año": "index"}).set_index("index")["Índice de Gini (procesado)"])
+    # Histograma
+    st.subheader(f"📊 Histograma del Índice de Gini en {pais_seleccionado}")
+    st.bar_chart(df.rename(columns={"Año": "index"}).set_index("index")["Índice de Gini (procesado)"])
+
 
     with st.expander("📄 Ver tabla de datos"):
         st.dataframe(df, use_container_width=True)
@@ -97,3 +103,20 @@ if not df.empty:
     )
 else:
     st.warning("No se encontraron datos para ese país o período.")
+
+
+with st.expander("📤 Enviar datos a ESP32"):
+    if st.button("Enviar"):
+        try:
+            # Prepara los datos a enviar en formato JSON
+            data_to_send = {
+                "pais": pais_seleccionado,
+                "gini": float(df["Índice de Gini (procesado)"].iloc[-1]),  # Convertir a float para asegurar que sea serializable
+                "anio": int(df["Año"].iloc[-1])  # Asegurar que el año sea un valor entero serializable
+                
+            }
+            # Enviar los datos al ESP32
+            r = requests.post(f"http://192.168.0.30/datos", json=data_to_send, timeout=10)
+            st.success(f"Respuesta de la ESP32: {r.text}")
+        except Exception as e:
+            st.error(f"No se pudo enviar: {e}")

@@ -24,6 +24,7 @@ except (IndexError, KeyError, ValueError) as e:
     print("Error al obtener el valor del índice GINI:", e)
     exit(1)
 
+
 #Llamar a la función en C
 resultado = gini_lib.convertir_y_sumar(valor)
 

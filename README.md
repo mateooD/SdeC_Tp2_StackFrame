@@ -6,44 +6,53 @@ Este proyecto tiene como objetivo diseñar e implementar una interfaz multicapas
 
 - Python 🐍 (API REST y visualización)
 - C 💻 (capa intermedia y lógica)
-- Ensamblador (futuro, operaciones de bajo nivel)
+- Assembly 
+- ESP32 + PlatformIO
+- Streamlit
+- API del Banco Mundial (World Bank Open Data)
 - Git & GitHub 🌐
 - Makefile 🛠️
-- Testing y documentación 📚
-
-## 📂 Estructura esperada
 
 
+## 📂 Estructura
 
 ```
 ├── c/ # Código fuente en C y ensamblador 
 ├── python/ # Scripts en Python 
-├── tests/ # Casos de prueba 
+├── esp32_webserver/ # Proyecto PlatformIO con ESP32 como servidor embebido
 ├── docs/ # Diagramas y documentación técnica 
 ├── Makefile # Automatización de compilación 
 └── README.md # Descripción general del proyecto 
 ``` 
-## 📌 Objetivo de la primera etapa
 
-Integrar Python con C usando `ctypes`. Se realizará:
-- Consulta a la API del Banco Mundial
-- Extracción del índice GINI de Argentina
-- Envío del valor como `float` a C
-- C lo convierte a entero, suma 1 y lo devuelve
-- Python muestra el resultado
+## 🚀 ¿Cómo correr el proyecto?
 
-## 🔄 Próximas etapas
+### 1. Streamlit App
 
-- Implementación de rutinas en ensamblador
-- Pruebas automáticas y profiling
-- Mejoras en visualización y exportación de datos
+```bash
+cd python
+streamlit run main.py
+```
+Asegurate de configurar correctamente tu red WiFi en el archivo main.cpp.
+Podras visualizar la app en un host local o en una IP brindada.
 
-## 🔧 Cómo colaborar
+### 2. Proyecto ESP32 (PlatformIO)
 
-Se trabajará en ramas:
-- `main`: rama estable
-- `dev`: rama de integración
-- `feature/*`: desarrollo de nuevas funcionalidades
----
+```bash
+cd esp32_webserver
+pio run -t upload && pio run -t monitor
+```
+En el monitor serial corroboras el funcionamiento, como asi tambien la IP de el servidor embebido.
+Para la visualizacion de los datos añadir el endpoint /ver
 
+### 3. Comunicación App ↔️ ESP32
 
+En la interfaz Streamlit, se puede ingresar la IP local de la ESP32 para enviarle datos procesados en tiempo real y mostrarlos en la web embebida.
+
+### Ejemplos de uso 
+
+- Seleccionás un país y un rango de años.
+
+- La app muestra la evolución del Índice de Gini (original y procesado).
+
+- Se puede probar la conexión con la ESP32 y enviar datos.

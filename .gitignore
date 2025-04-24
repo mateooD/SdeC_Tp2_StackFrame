@@ -28,3 +28,20 @@ venv/
 # === Archivos de IDEs ===
 .vscode/
 .idea/
+
+# Para PlatformIO
+.pio
+.vscode
+*.elf
+*.bin
+*.map
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# General
+.DS_Store
+.env
